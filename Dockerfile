@@ -5,7 +5,7 @@ COPY . .
 RUN mvn install
 
 # Inject the JAR file into a new container to keep the file small
-FROM openjdk:11-jre-slim
+FROM openjdk:11
 WORKDIR /app
 COPY --from=build /app/target/sb-chart-couch-*.jar /app/app.jar
 EXPOSE 8080
