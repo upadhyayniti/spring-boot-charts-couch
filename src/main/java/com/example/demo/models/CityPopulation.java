@@ -1,9 +1,8 @@
 package com.example.demo.models;
 
+//import org.springframework.data.couchbase.core.mapping.Document;
 
-import org.springframework.data.couchbase.core.mapping.Document;
-
-@Document
+//@Document
 public class CityPopulation {
 
     private String city;
