@@ -6,7 +6,6 @@ import org.springframework.data.couchbase.core.mapping.Document;
 @Document
 public class CityPopulation {
 
-    @Id
     private String city;
     private String population;
 
