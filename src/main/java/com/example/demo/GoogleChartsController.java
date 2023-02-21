@@ -19,7 +19,9 @@ import com.couchbase.client.java.query.QueryScanConsistency;
 
 import com.example.demo.configs.DBProperties;
 import com.example.demo.models.CityPopulation;
+import org.springframework.web.bind.annotation.RestController;
 @Controller
+@RestController
 public class GoogleChartsController {
 
     private Cluster cluster;
