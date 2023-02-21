@@ -30,6 +30,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- From https://medium.com/@reachansari/google-chart-example-with-spring-boot-cd25ead09bd3-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -38,17 +40,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+
 		<dependency>
             <groupId>com.couchbase.client</groupId>
             <artifactId>java-client</artifactId>
             <version>${couchbase.version}</version>
         </dependency>
-		<dependency>
+
+		<!-- this one from https://docs.couchbase.com/tutorials/quick-start/quickstart-java27-springdata32-intellij-firstquery-cb65.html-->
+	<!--	<dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-couchbase</artifactId>
             <version>3.2.3.RELEASE</version>
-        </dependency>
+        </dependency> -->
 
+<!-- below from https://github.com/couchbase-examples/java-springboot-quickstart-->
 		<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
