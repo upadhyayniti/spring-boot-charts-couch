@@ -41,12 +41,14 @@ public class GoogleChartsController {
         //select  distinct address.city, population from `cb-bucket`._default._default where population is not null
         String qryString = "SELECT cp.address.city, cp.population FROM `"+dbProperties.getBucketName()+"`.`_default`.`_default` cp "+
                             "WHERE population is not null";
-        System.out.println("Query="+qryString);
+        //System.out.println("Query="+qryString);
         //TBD with params: final List<Profile> profiles = cluster.query("SELECT p.* FROM `$bucketName`.`_default`.`$collectionName` p WHERE lower(p.firstName) LIKE '$search' OR lower(p.lastName) LIKE '$search' LIMIT $limit OFFSET $skip",
         final List<CityPopulation> cityPopulation = 
                 cluster.query(qryString,
                     QueryOptions.queryOptions().scanConsistency(QueryScanConsistency.REQUEST_PLUS))
                 .rowsAs(CityPopulation.class);
+
+        System.out.println(Arrays.toString(cityPopulation.toArray()));
 
         Map<String, Integer> graphData = new TreeMap<>();
         graphData.put("2016", 147);
