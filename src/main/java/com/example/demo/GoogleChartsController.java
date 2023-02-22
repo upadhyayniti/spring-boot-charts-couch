@@ -46,11 +46,9 @@ public class GoogleChartsController {
                     QueryOptions.queryOptions().scanConsistency(QueryScanConsistency.REQUEST_PLUS))
                 .rowsAs(CityPopulation.class);
 
-        System.out.println("Size of citypop is " + cityPopulations.size());
-
         Map<String, Integer> graphData = new TreeMap<>();
 
-        cityPopulations.forEach(cityPopulation -> System.out.println("data is " + cityPopulation.getCity() + " population " + cityPopulation.getPopulation()));
+        cityPopulations.forEach(cityPopulation -> graphData.put(cityPopulation.getCity(), Integer.parseInt(cityPopulation.getPopulation())));
 
 /*        graphData.put("2016", 147);
         graphData.put("2017", 1256);
