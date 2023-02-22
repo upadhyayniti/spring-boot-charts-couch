@@ -49,7 +49,8 @@ public class GoogleChartsController {
         Map<String, Integer> graphData = new TreeMap<>();
 
         for(CityPopulation cityPopulation: cityPopulations) {
-            graphData.put(cityPopulation.getCity(),2000);
+            graphData.put("somedata",2000);
+            System.out.println("data should be " + cityPopulation.getCity() + " and " + Integer.parseInt(cityPopulation.getPopulation()));
         }
 
 /*        graphData.put("2016", 147);
