@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GoogleChartsController {
 
-    private Cluster cluster;
+/*    private Cluster cluster;
     private Bucket bucket;
     private DBProperties dbProperties;
 
@@ -35,7 +35,7 @@ public class GoogleChartsController {
           this.bucket = bucket;
           this.dbProperties = dbProperties;
       }
-
+*/
     @GetMapping("/")
     public String getPieChart(Model model) {
 
