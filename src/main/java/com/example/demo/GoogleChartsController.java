@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,22 +40,23 @@ public class GoogleChartsController {
     public String getPieChart(Model model) {
 
         //select  distinct address.city, population from `cb-bucket`._default._default where population is not null
-        String qryString = "SELECT cp.address.city, cp.population FROM `"+dbProperties.getBucketName()+"`.`_default`.`_default` cp "+
+        String qryString = "SELECT distinct cp.address.city, cp.population FROM `"+dbProperties.getBucketName()+"`.`_default`.`_default` cp "+
                             "WHERE population is not null";
         //System.out.println("Query="+qryString);
         //TBD with params: final List<Profile> profiles = cluster.query("SELECT p.* FROM `$bucketName`.`_default`.`$collectionName` p WHERE lower(p.firstName) LIKE '$search' OR lower(p.lastName) LIKE '$search' LIMIT $limit OFFSET $skip",
-        final List<CityPopulation> cityPopulation = 
+        final List<CityPopulation> cityPopulations = 
                 cluster.query(qryString,
                     QueryOptions.queryOptions().scanConsistency(QueryScanConsistency.REQUEST_PLUS))
                 .rowsAs(CityPopulation.class);
 
-        System.out.println(Arrays.toString(cityPopulation.toArray()));
-
         Map<String, Integer> graphData = new TreeMap<>();
-        graphData.put("2016", 147);
+        for(CityPopulation cityPopulation: cityPopulations) {
+            graphData.put(cityPopulation.getCity(),Integer.parseInt(cityPopulation.getPopulation()));
+        }
+/*        graphData.put("2016", 147);
         graphData.put("2017", 1256);
         graphData.put("2018", 3856);
-        graphData.put("2019", 19807);
+        graphData.put("2019", 19807);*/
         model.addAttribute("chartData", graphData);
         return "google-charts";
     }
