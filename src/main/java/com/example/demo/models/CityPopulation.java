@@ -1,12 +1,7 @@
 package com.example.demo.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.couchbase.core.mapping.Document;
-
-@Document
 public class CityPopulation {
 
-    @Id
     private String city;
     private String population;
 
