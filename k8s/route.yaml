@@ -1,0 +1,20 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: charts
+  namespace: charts
+  labels:
+    app: charts
+    app.kubernetes.io/component: charts
+    app.kubernetes.io/instance: charts
+    app.kubernetes.io/name: charts
+    app.kubernetes.io/part-of: charts-app
+spec:
+#  host: charts-charts.apps.cluster-8gr4s.8gr4s.sandbox2251.opentlc.com
+  to:
+    kind: Service
+    name: charts
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None

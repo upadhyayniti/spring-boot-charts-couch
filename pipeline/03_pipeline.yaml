@@ -1,0 +1,74 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: charts-pipeline
+  namespace: charts
+spec:
+  params:
+    - description: Location of the repo where image has to be pushed
+      name: IMAGE
+      type: string
+    - description: Location of code
+      name: CODE
+      type: string
+    - description: Deployment Name
+      name: NAME
+      type: string
+      default: charts
+    - description: Branch of code
+      name: BRANCH
+      type: string
+      default: mvp
+  tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.CODE)
+        - name: subdirectory
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+        - name: revision
+          value: $(params.BRANCH)
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+    - name: charts-build
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE)
+        - name: DOCKERFILE
+          value: Dockerfile
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: apply-manifests
+      taskRef:
+        name: apply-manifests
+      workspaces:
+      - name: source
+        workspace: shared-workspace
+      runAfter:
+      - charts-build
+    - name: update-deployment
+      taskRef:
+        name: update-deployment
+      params:
+      - name: deployment
+        value: $(params.NAME)
+      - name: IMAGE
+        value: $(params.IMAGE)
+      runAfter:
+      - apply-manifests
+  workspaces:
+    - name: shared-workspace
+
+#To use newly created image, need update-deployment unless you hardcode image url in deployment.yaml. 

@@ -1,0 +1,27 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: charts
+  namespace: charts
+  labels:
+    app: charts
+    app.kubernetes.io/component: charts
+    app.kubernetes.io/instance: charts
+    app.kubernetes.io/name: charts
+    app.kubernetes.io/part-of: charts-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: charts
+  template:
+    metadata:
+      labels:
+        app: charts
+        deploymentconfig: charts
+    spec:
+      containers:
+        - name: charts
+          image: >-
+            quay.io/nupadhya/charts:latest
+          resources: {}

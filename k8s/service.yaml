@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: charts
+  namespace: charts
+  labels:
+    app: charts
+    app.kubernetes.io/component: charts
+    app.kubernetes.io/instance: charts
+    app.kubernetes.io/name: charts
+    app.kubernetes.io/part-of: charts-app
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    app: charts
+    deploymentconfig: charts
